@@ -5,7 +5,7 @@
 # 3 - UNKNOWN
 # Remote Monitor Name: HW - Dell Server Chassis Status 
 # Remote Monitor Command: "%windir%\System32\WindowsPowerShell\v1.0\powershell.exe" -noprofile -command "(new-object Net.WebClient).DownloadString('https://raw.githubusercontent.com/tiktb8/automate/master/src/Hardware Manufacturers/Dell/Servers/Monitors/Get-DellChassisStatus.ps1') | iex;"
-$chassisStatus = omstatus chassis | out-string
+$chassisStatus = omreport chassis | out-string
 if($chassisStatus -Match "Critical")
 {
     return 2
