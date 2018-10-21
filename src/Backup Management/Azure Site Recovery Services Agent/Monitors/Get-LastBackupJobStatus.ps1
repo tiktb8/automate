@@ -1,5 +1,14 @@
-# Remote Monitor Name: BU - Azure Recovery Services Agent - Last Backup Status 
-# Remote Monitor Command: "%windir%\System32\WindowsPowerShell\v1.0\powershell.exe" -noprofile -command "(new-object Net.WebClient).DownloadString('https://raw.githubusercontent.com/tiktb8/automate/master/src/Backup Management/Azure Site Recovery Services Agent/Get-LastBackupJobStatus.ps1') | iex;"
+<#
+    .SYNOPSIS
+    Retrieves the status of the last backup job from the MARS Agent.
+    
+    .DESCRIPTION
+    The Get-LastBackupJobStatus function uses the MSOnlineBackup module    
+    
+    .EXAMPLE
+    Get-LastBackupJobStatus    
+    
+#>
 Import-Module MSOnlineBackup
 $lastJob = Get-OBJob -Previous 1
 if ($lastJob.JobStatus.JobState -ne 'Completed')
