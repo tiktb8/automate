@@ -15,7 +15,8 @@ $policy = Get-OBPolicy
 $dateThreshold = (Get-Date).AddDays(-7)
 Foreach ($ds in $policy.DsList) {
     #$dataSources.Add($ds.DataSourceName)
-    $jobs = Get-OBAllRecoveryPoints | Where-Object {$_.DataSources -contains $ds.DataSourceName} | Sort-Object {$_.BackupTime} -Descending
+    $dataSourceName = $ds.DataSourceName
+    $jobs = Get-OBAllRecoveryPoints | Where-Object {$_.DataSources -like "*$dataSourceName*"} | Sort-Object {$_.BackupTime} -Descending
     if (-not $jobs) {
         return 2
     }
@@ -27,4 +28,3 @@ Foreach ($ds in $policy.DsList) {
 }
 
 return 0
-    
