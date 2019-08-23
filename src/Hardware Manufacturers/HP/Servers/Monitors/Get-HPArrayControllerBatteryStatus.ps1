@@ -16,6 +16,11 @@ try {
     $arraySystems =  Get-WmiObject -Namespace root\hpq -Class HPSA_ArraySystem
     ForEach ($arraySystem in $arraySystems){
         $arrayController = Get-WmiObject -Namespace root\hpq -Query ("associators of {HPSA_ArraySystem.CreationClassName='HPSA_ArraySystem',Name='" + $arraySystem.Name + "'} WHERE AssocClass=HPSA_ArraySystemArrayController")
+        if ($arrayController.BatteryStatus -eq $null)
+        {
+            #No Battery
+            return 0
+        }
                 
         
         if ($arrayController.BatteryStatus -ne 1)
