@@ -17,9 +17,9 @@ try {
     ForEach ($mpFirmware in $mpFirmwares){
         $mp = Get-WmiObject -Namespace root\hpq -Query ("ASSOCIATORS OF {HP_MPFirmware.InstanceID='" + $mpFirmware.InstanceID + "'} WHERE AssocClass=HP_MPInstalledFirmwareIdentity")
 
-        if ($mp.NICCondition -ne 2)
+        if (($mp.NICCondition -eq 2) -or ($mp.NICCondition -eq 4))
         {
-            return 2
+            return 0
         }
     }
     
@@ -28,4 +28,3 @@ catch {
     return "Failed to retrieve iLO connection status"
     
 }
-return 0
